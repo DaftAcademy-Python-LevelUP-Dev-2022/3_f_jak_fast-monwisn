@@ -4,6 +4,8 @@ from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
+# task 3.1
+
 
 @app.get("/start", response_class=HTMLResponse)
 async def root():
