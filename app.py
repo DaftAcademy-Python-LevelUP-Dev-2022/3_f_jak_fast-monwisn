@@ -8,12 +8,7 @@ app = FastAPI()
 
 
 @app.get("/start", response_class=HTMLResponse)
-async def root():
-    html_content = """
-    <html>
-        <body>
-            <h1>The unix epoch started at 1970-01-01</h1>
-        </body>
-    </html>
-    """
+def root():
+    html_content = "<h1>The unix epoch started at 1970-01-01</h1>"
+    
     return HTMLResponse(content=html_content, status_code=200)
