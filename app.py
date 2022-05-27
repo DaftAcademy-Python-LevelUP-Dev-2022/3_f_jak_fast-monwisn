@@ -1,8 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, Response, status, Header, Query
 from fastapi.responses import HTMLResponse
-
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from starlette.responses import JSONResponse, RedirectResponse
 
 app = FastAPI()
+security = HTTPBasic()
+app.paths = []
+
 
 # task 3.1
 
@@ -19,7 +23,21 @@ def root():
 
 # task 3.3
 
+@app.get('/info')
+def info(format: str = Query(None), user_agent: str | None = Header(default=None)):
+    
+    if format == 'json':
+        json_content = {"user_agent": user_agent}
+        return JSONResponse(content=json_content)
 
+    elif format == 'html':
+        html_content = f'<input type="text" id=user-agent name=agent value="{user_agent}">'
+        return HTMLResponse(content=html_content)
+
+    else:
+        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+
+  
 # task 3.4
 
 @app.put('/save/{string}')
